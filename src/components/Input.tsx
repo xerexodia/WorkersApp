@@ -6,19 +6,19 @@ import Entypo from 'react-native-vector-icons/Entypo';
 interface Props extends TextInputProps {
   label?: string;
   icon?: JSX.Element;
-  onFocus?: () => void;
-  error?: string;
+  onBlur?: () => void;
+  error?: string | null;
   secureTextEntry?: boolean;
 }
 
-const Input: React.FC<Props> = ({ secureTextEntry, label, error, icon, onFocus, ...rest }) => {
+const Input: React.FC<Props> = ({ secureTextEntry, label, error, icon, onBlur, ...rest }) => {
   const [borderColor, setBorderColor] = useState<string>(colors.grey);
-  const [isPassword, setIsPasswor] = useState<boolean>(true);
+  const [isPassword, setIsPasswor] = useState<boolean>(false);
   return (
     <View style={styles.container}>
       {/* input label */}
       <Label>{label}</Label>
-      <View style={[styles.inputContainer, { borderColor: borderColor }]}>
+      <View style={[styles.inputContainer, { borderColor: error ? colors.red : borderColor }]}>
         {/* input left icon */}
         <View style={styles.leftIcon}>{icon ? icon : null}</View>
         {/* input field*/}
@@ -27,7 +27,10 @@ const Input: React.FC<Props> = ({ secureTextEntry, label, error, icon, onFocus, 
           {...rest}
           onFocus={() => {
             setBorderColor(colors.dark);
-            onFocus?.();
+          }}
+          onBlur={() => {
+            setBorderColor(colors.grey);
+            onBlur?.();
           }}
           secureTextEntry={isPassword}
         />
@@ -47,7 +50,7 @@ const Input: React.FC<Props> = ({ secureTextEntry, label, error, icon, onFocus, 
 export default Input;
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 10, position: 'relative' },
+  container: { position: 'relative' },
   inputContainer: {
     position: 'relative',
     backgroundColor: colors.lightGrey,
