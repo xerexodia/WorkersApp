@@ -1,4 +1,7 @@
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+
+export const { width, height } = Dimensions.get('window');
 
 interface Colors {
   primary: string;
@@ -50,8 +53,8 @@ export const fonts: Fonts = {
 
 // general container
 export const Container = styled.View`
-  flex: 1;
   background-color: ${colors.primary};
+  height: ${height}px;
 `;
 
 // label input
