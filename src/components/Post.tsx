@@ -6,6 +6,7 @@ const Post = () => {
   return (
     <>
       <TouchableOpacity style={styles.container}>
+        <Text style={styles.deadLine}>Ends in 2d</Text>
         <View style={styles.info}>
           <Avatar
             size={64}
@@ -42,6 +43,8 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     paddingHorizontal: 15,
     paddingVertical: 20,
+    position: 'relative',
+    overflow: 'hidden',
   },
   info: {
     flexDirection: 'row',
@@ -70,5 +73,15 @@ const styles = StyleSheet.create({
   description: {
     marginLeft: 10,
     lineHeight: 23,
+  },
+  deadLine: {
+    position: 'absolute',
+    backgroundColor: colors.red,
+    color: colors.primary,
+    fontWeight: '600',
+    top: 0,
+    right: 0,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
   },
 });
