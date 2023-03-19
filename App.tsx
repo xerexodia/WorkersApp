@@ -15,12 +15,17 @@ import SignUp from '~/screens/SignUp';
 import { FirstStep, SecondStep } from '~/screens/client/register/index';
 import Post from '~/components/Post';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import PostDetails from '~/screens/PostDetails';
+import Profile from '~/screens/client/Profile';
+import { NavigationContainer } from '@react-navigation/native';
+import MyTabs from '~/routes/worker/bottomTabNav';
 function App(): JSX.Element {
   return (
     <SafeAreaProvider>
-      <Post />
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
-
 export default App;
