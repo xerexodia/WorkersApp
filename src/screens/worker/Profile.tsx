@@ -9,6 +9,7 @@ import { colors, fonts, height } from '~/utils/generalStyles';
 // icons imports
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Profile = () => {
   return (
@@ -45,8 +46,8 @@ const Profile = () => {
           {/* account badge link */}
           <TouchableOpacity style={styles.badge}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FontAwesome name="user" size={30} color={colors.brand} />
-              <Text style={styles.link}>Mon Compte</Text>
+              <Ionicons name="settings" size={30} color={colors.brand} />
+              <Text style={styles.link}>Settings</Text>
             </View>
             <Entypo name="chevron-right" size={25} color={colors.grey} />
           </TouchableOpacity>
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: 'space-between',
     marginBottom: 30,
+    elevation: 2,
   },
   link: {
     marginLeft: 20,
