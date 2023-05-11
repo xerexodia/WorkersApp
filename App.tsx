@@ -18,6 +18,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import PostDetails from '~/screens/PostDetails';
 import Profile from '~/screens/client/Profile';
 import { NavigationContainer } from '@react-navigation/native';
+import ClientBootomTabNav from '~/routes/client/bottomTabNav';
+import SeachWorker from '~/screens/client/SeachWorker';
+import WorkerProfile from '~/screens/client/WorkerProfile';
 import MyTabs from '~/routes/worker/bottomTabNav';
 function App(): JSX.Element {
   return (

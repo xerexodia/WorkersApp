@@ -1,9 +1,8 @@
-import { StyleSheet, StatusBar, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, StatusBar, Text, View } from 'react-native';
 import React from 'react';
-import { Container, colors, fonts, height, width } from '~/utils/generalStyles';
+import { colors, fonts, width } from '~/utils/generalStyles';
 import Input from '~/components/Input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import { Formik } from 'formik';
@@ -11,7 +10,6 @@ import Button from '~/components/Button';
 import * as yup from 'yup';
 
 // register first step
-
 const FirstStep = () => {
   return (
     <>
