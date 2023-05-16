@@ -1,6 +1,6 @@
 import React from 'react';
 // components imports
-import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StatusBar, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Avatar } from '@rneui/themed';
 
 // design helpers imports
@@ -9,8 +9,12 @@ import { colors, fonts, height } from '~/utils/generalStyles';
 // icons imports
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-
+import { useAuthContext } from '~/context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 const Profile = () => {
+  const { logout, user } = useAuthContext();
+  const navigation = useNavigation<any>();
+  console.log(user);
   return (
     <>
       <View style={styles.container}>
@@ -19,31 +23,36 @@ const Profile = () => {
         <View style={styles.header}>
           <View style={styles.info}>
             <Avatar
+              source={{ uri: user?.photo.replace('127.0.0.1', '10.0.2.2') }}
               size={84}
               rounded
-              title="AI"
-              titleStyle={{ color: colors.grey }}
-              containerStyle={{ backgroundColor: colors.lightGrey }}
+              // titleStyle={{ color: colors.grey }}
+              // containerStyle={{ backgroundColor: colors.lightGrey }}
             />
-            <Text style={styles.name}>Islem Abdellaoui</Text>
+            <Text style={styles.name}>
+              {user?.nom} {user?.prenom}
+            </Text>
             <Text style={styles.place}>Sidi bouzid</Text>
           </View>
           {/* -----------------------stats--------------------*/}
           <View style={styles.box}>
             <View style={styles.statsContainer}>
-              <Text style={styles.title}>Taches accomplis</Text>
+              <Text style={styles.title}>Taches postulées</Text>
               <Text style={styles.subTitle}> 150</Text>
             </View>
             <View style={styles.statsContainer}>
-              <Text style={styles.title}>Taches en cours</Text>
-              <Text style={styles.subTitle}> 3</Text>
+              <Text style={styles.title}>Taches terminées</Text>
+              <Text style={styles.subTitle}> 93</Text>
             </View>
           </View>
         </View>
         {/*-----------------body-------------------*/}
         <View style={styles.body}>
           {/* account badge link */}
-          <TouchableOpacity style={styles.badge}>
+          <TouchableOpacity
+            style={styles.badge}
+            onPress={() => navigation.navigate('updateProfile')}
+          >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FontAwesome name="user" size={30} color={colors.brand} />
               <Text style={styles.link}>Mon Compte</Text>
@@ -59,7 +68,7 @@ const Profile = () => {
             <Entypo name="chevron-right" size={25} color={colors.grey} />
           </TouchableOpacity>
           {/* loogout badge link */}
-          <TouchableOpacity style={styles.badge}>
+          <TouchableOpacity onPress={logout} style={styles.badge}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FontAwesome name="power-off" size={25} color={colors.brand} />
               <Text style={styles.link}>Logout</Text>

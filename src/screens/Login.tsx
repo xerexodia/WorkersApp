@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import React from 'react';
 import { Container, colors, fonts, height, width } from '~/utils/generalStyles';
 import Input from '~/components/Input';
@@ -7,8 +7,15 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import { Formik } from 'formik';
 import Button from '~/components/Button';
 import * as yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { url } from '~/utils/contants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuthContext } from '~/context/AuthContext';
 
 const Login = () => {
+  const navigation = useNavigation<any>();
+  const { setUser, setLoading } = useAuthContext();
   return (
     <Container>
       <View style={styles.container}>
@@ -16,8 +23,18 @@ const Login = () => {
         <Text style={styles.subtitle}>Se Connecter</Text>
         <Formik
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) => {
-            console.log(values);
+          onSubmit={async (values) => {
+            setLoading(true);
+            await axios
+              .post(`${url}login`, values)
+              .then((res) => {
+                AsyncStorage.setItem('user', JSON.stringify(res.data));
+                setUser(res.data);
+                setLoading(false);
+              })
+              .catch((err) => {
+                console.log(err), setLoading(false);
+              });
           }}
           validationSchema={yup.object().shape({
             email: yup.string().email().required(),
@@ -48,10 +65,9 @@ const Login = () => {
               />
               <View style={styles.spacing} />
               <Button title="Submit" onPress={handleSubmit} />
-              <View style={styles.extraInfo}>
+              <Pressable onPress={() => navigation.navigate('signUp')} style={styles.extraInfo}>
                 <Text style={styles.link}>Je n'ai pas un compte</Text>
-                <Text style={styles.link}>mot de passe oublié</Text>
-              </View>
+              </Pressable>
             </View>
           )}
         </Formik>

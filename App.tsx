@@ -6,13 +6,12 @@
  */
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import Input from './src/components/Input';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { colors } from '~/utils/generalStyles';
 import Login from '~/screens/Login';
 import SignUp from '~/screens/SignUp';
-import { FirstStep, SecondStep } from '~/screens/client/register/index';
 import Post from '~/components/Post';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import PostDetails from '~/screens/PostDetails';
@@ -22,12 +21,22 @@ import ClientBootomTabNav from '~/routes/client/bottomTabNav';
 import SeachWorker from '~/screens/client/SeachWorker';
 import WorkerProfile from '~/screens/client/WorkerProfile';
 import MyTabs from '~/routes/worker/bottomTabNav';
+import AuthRoutes from '~/routes/authRoutes';
+import Test from '~/components/PickImageComponent';
+import { Formik } from 'formik';
+import ImagePickerComponent from '~/components/PickImageComponent';
+import { TextInput } from 'react-native-gesture-handler';
+import AuthContext, { useAuthContext } from '~/context/AuthContext';
 function App(): JSX.Element {
+  const { user } = useAuthContext();
+  console.log(user);
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer>
+      <AuthContext>
+        <NavigationContainer>
+          <AuthRoutes />
+        </NavigationContainer>
+      </AuthContext>
     </SafeAreaProvider>
   );
 }

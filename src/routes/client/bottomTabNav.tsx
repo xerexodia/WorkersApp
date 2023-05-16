@@ -7,6 +7,7 @@ import { Text } from 'react-native';
 import Home from '~/screens/client/Home';
 import WorkersList from '~/screens/client/WorkersList';
 import Profile from '~/screens/client/Profile';
+import ProfileNav from './profile';
 // import TopTab from './topTabNav';
 
 const Tab = createBottomTabNavigator();
@@ -16,6 +17,7 @@ export default function ClientBootomTabNav() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarStyle: {
           height: 60,
@@ -84,7 +86,7 @@ export default function ClientBootomTabNav() {
       />
       <Tab.Screen
         name="Settings"
-        component={Profile}
+        component={ProfileNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons name="person" size={26} color={focused ? colors.brand : colors.grey} />

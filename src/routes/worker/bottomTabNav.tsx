@@ -15,6 +15,7 @@ export default function MyTabs() {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           height: 60,
           position: 'absolute',

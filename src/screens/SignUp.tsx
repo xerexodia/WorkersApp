@@ -3,19 +3,23 @@ import React from 'react';
 import { colors, fonts, height } from '~/utils/generalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const items = [
   {
     icon: <Ionicons name="person" size={40} color={colors.brand} />,
     text: 'i am client, looking for workers',
+    link: 'signUpClient',
   },
   {
     icon: <MaterialCommunityIcons name="bag-personal" size={40} color={colors.brand} />,
     text: 'i am worker, looking for job',
+    link: 'signUpWorker',
   },
 ];
 
 const SignUp = () => {
+  const navigation = useNavigation<any>();
   return (
     <>
       <StatusBar backgroundColor="transparent" barStyle={'dark-content'} />
@@ -23,7 +27,11 @@ const SignUp = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Join Us as a client or a worker</Text>
           {items.map((item, idx) => (
-            <TouchableOpacity key={idx} style={styles.box}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(item.link)}
+              key={idx}
+              style={styles.box}
+            >
               {item.icon}
               <Text style={styles.text}>{item.text}</Text>
             </TouchableOpacity>
@@ -31,7 +39,7 @@ const SignUp = () => {
           <View style={styles.link}>
             <Text style={styles.textLink}>You have already an account?</Text>
 
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('login')}>
               <Text style={styles.loginLink}>Login</Text>
             </Pressable>
           </View>

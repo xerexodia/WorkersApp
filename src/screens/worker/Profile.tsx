@@ -10,8 +10,10 @@ import { colors, fonts, height } from '~/utils/generalStyles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useAuthContext } from '~/context/AuthContext';
 
 const Profile = () => {
+  const { logout } = useAuthContext();
   return (
     <>
       <View style={styles.container}>
@@ -60,7 +62,7 @@ const Profile = () => {
             <Entypo name="chevron-right" size={25} color={colors.grey} />
           </TouchableOpacity>
           {/* loogout badge link */}
-          <TouchableOpacity style={styles.badge}>
+          <TouchableOpacity style={styles.badge} onPress={logout}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <FontAwesome name="power-off" size={25} color={colors.brand} />
               <Text style={styles.link}>Logout</Text>
