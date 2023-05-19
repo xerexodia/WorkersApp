@@ -23,6 +23,7 @@ import { url } from '~/utils/contants';
 import { useAuthContext } from '~/context/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = () => {
@@ -73,6 +74,7 @@ const Home = () => {
                       setVisibleComment(true), setPostId(item._id);
                     }}
                   >
+                    <AntDesign style={{ marginRight: 10 }} name="heart" color={'red'} size={24} />
                     <Fontisto name="comments" size={22} />
                   </Pressable>
                   <Modal
@@ -147,19 +149,19 @@ const Home = () => {
                 ) : null}
                 <View style={{ marginVertical: 15 }} />
                 <Input
-                  label="Title:"
-                  placeholder="title"
+                  label="Tache:"
+                  placeholder="tache"
                   onChangeText={handleChange('title')}
                   error={touched.title && errors.title ? errors.title : null}
                 />
-                <View style={{ marginVertical: 15 }} />
+                <View style={{ marginVertical: 8 }} />
                 <Input
                   label="Adresse:"
                   placeholder="adresse"
                   onChangeText={handleChange('adresse')}
                   error={touched.adresse && errors.adresse ? errors.adresse : null}
                 />
-                <View style={{ marginVertical: 15 }} />
+                <View style={{ marginVertical: 8 }} />
                 <Input
                   label="Description:"
                   placeholder="description"
@@ -168,7 +170,10 @@ const Home = () => {
                   numberOfLines={4}
                   error={touched.description && errors.description ? errors.description : null}
                 />
-                <View style={{ marginVertical: 15 }} />
+                <View style={{ marginVertical: 8 }} />
+                <Text style={{ marginVertical: 15, fontSize: fonts.xs, fontWeight: '600' }}>
+                  ajouter Tache +
+                </Text>
                 <Button title="Submit" onPress={handleSubmit} />
               </>
             )}
@@ -369,5 +374,6 @@ const styles = StyleSheet.create({
   commentPress: {
     marginTop: 16,
     alignSelf: 'flex-end',
+    flexDirection: 'row',
   },
 });

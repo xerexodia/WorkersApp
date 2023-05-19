@@ -6,6 +6,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { colors, fonts } from '~/utils/generalStyles';
 import { Text } from 'react-native';
 import TopTab from './topTabNav';
+import PostNav from './PostStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +29,7 @@ export default function MyTabs() {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={PostNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons name="home" size={26} color={focused ? colors.brand : colors.grey} />

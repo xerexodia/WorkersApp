@@ -10,7 +10,6 @@ import ClientBootomTabNav from './client/bottomTabNav';
 const Tab = createNativeStackNavigator();
 const AuthRoutes = () => {
   const { user } = useAuthContext();
-  console.log(user);
   if (user) {
     if (user.role === 'worker') {
       return (

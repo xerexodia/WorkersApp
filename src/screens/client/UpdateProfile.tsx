@@ -41,7 +41,7 @@ const UpdateProfile = () => {
       <>
         <Formik
           initialValues={{
-            photo: user.photo.replace('127.0.0.1', '10.0.2.2'),
+            photo: user.photo && user?.photo?.replace('127.0.0.1', '10.0.2.2'),
             nom: user.nom,
             prenom: user.prenom,
             email: user.email,

@@ -1,10 +1,18 @@
-import { StatusBar, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StatusBar, StyleSheet, Image, Text, View, Dimensions } from 'react-native';
 import React from 'react';
 import { Avatar } from '@rneui/themed';
 import { colors, fonts, width } from '~/utils/generalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const PostDetails = () => {
+import Button from '~/components/Button';
+import axios from 'axios';
+import { url } from '~/utils/contants';
+import { useAuthContext } from '~/context/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+const PostDetails = (props: any) => {
+  const item = props.route.params.item;
+  const { user } = useAuthContext();
+  const navigation = useNavigation<any>();
   return (
     <>
       <StatusBar backgroundColor={colors.blueElectrique} />
@@ -13,20 +21,55 @@ const PostDetails = () => {
           <Avatar
             size={64}
             rounded
-            title="AI"
+            title={item.clientId.nom[0]}
             titleStyle={{ color: colors.grey }}
             containerStyle={styles.avatar}
           />
         </View>
-        <Text style={styles.name}>Islem Abdellaoui</Text>
+        <Text style={styles.name}>{item.clientId.nom}</Text>
         <View style={styles.body}>
-          <View style={styles.box}>
-            <MaterialCommunityIcons name="clock-time-four" size={30} color={colors.brand} />
-            <Text style={styles.text}>32 min ago</Text>
+          <View>
+            {item.photo && (
+              <Image
+                style={{
+                  width: '80%',
+                  height: 200,
+                  alignSelf: 'center',
+                  marginBottom: 20,
+                  borderRadius: 10,
+                }}
+                source={{ uri: item.photo.replace('127.0.0.1', '10.0.2.2') }}
+              />
+            )}
           </View>
-          <View style={styles.box}>
-            <MaterialIcons name="location-on" size={32} color={colors.brand} />
-            <Text style={styles.text}>Sidi bouzid</Text>
+          <View>
+            <Text>
+              Adresse: <Text style={{ marginLeft: 10, fontWeight: '500' }}>{item.adresse}</Text>{' '}
+            </Text>
+            <Text>
+              Description:
+              <Text style={{ marginLeft: 10, fontWeight: '500' }}>{item.description}</Text>{' '}
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              zIndex: 1000,
+              top: 400,
+              display: 'flex',
+              width: '90%',
+              alignItems: 'center',
+              alignSelf: 'center',
+            }}
+          >
+            <Button
+              title="réserver"
+              onPress={async () => {
+                await axios
+                  .patch(`${url}posts?postId=${item._id}&workerId=${user._id}`)
+                  .then((res) => navigation.navigate('Tasks', { screen: 'Reserved' }));
+              }}
+            />
           </View>
         </View>
       </View>
@@ -61,6 +104,8 @@ const styles = StyleSheet.create({
   body: {
     paddingHorizontal: 12,
     marginTop: 30,
+    height: '100%',
+    position: 'relative',
   },
   box: {
     flexDirection: 'row',

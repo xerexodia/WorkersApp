@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuthContext } from '~/context/AuthContext';
 
 const Profile = () => {
-  const { logout } = useAuthContext();
+  const { logout, user } = useAuthContext();
   return (
     <>
       <View style={styles.container}>
@@ -24,12 +24,14 @@ const Profile = () => {
             <Avatar
               size={84}
               rounded
-              title="AI"
+              title={user.nom[0].toUpperCase() + user.prenom[0].toUpperCase()}
               titleStyle={{ color: colors.grey }}
               containerStyle={{ backgroundColor: colors.lightGrey }}
             />
-            <Text style={styles.name}>Islem Abdellaoui</Text>
-            <Text style={styles.place}>Sidi bouzid</Text>
+            <Text style={styles.name}>
+              {user.nom} {user.prenom}
+            </Text>
+            <Text style={styles.place}>{user.adresse}</Text>
           </View>
           {/* -----------------------stats--------------------*/}
           <View style={styles.box}>

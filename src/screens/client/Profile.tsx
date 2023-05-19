@@ -23,11 +23,12 @@ const Profile = () => {
         <View style={styles.header}>
           <View style={styles.info}>
             <Avatar
-              source={{ uri: user?.photo.replace('127.0.0.1', '10.0.2.2') }}
+              source={user?.photo && { uri: user?.photo?.replace('127.0.0.1', '10.0.2.2') }}
               size={84}
               rounded
-              // titleStyle={{ color: colors.grey }}
-              // containerStyle={{ backgroundColor: colors.lightGrey }}
+              title={user.nom[0].toUpperCase() + user.prenom[0].toUpperCase()}
+              titleStyle={{ color: colors.grey }}
+              containerStyle={{ backgroundColor: colors.lightGrey }}
             />
             <Text style={styles.name}>
               {user?.nom} {user?.prenom}

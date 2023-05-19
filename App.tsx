@@ -27,6 +27,7 @@ import { Formik } from 'formik';
 import ImagePickerComponent from '~/components/PickImageComponent';
 import { TextInput } from 'react-native-gesture-handler';
 import AuthContext, { useAuthContext } from '~/context/AuthContext';
+import MyDrawer from '~/routes/drawer';
 function App(): JSX.Element {
   const { user } = useAuthContext();
   console.log(user);

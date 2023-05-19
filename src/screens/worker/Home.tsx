@@ -1,5 +1,5 @@
 import { StyleSheet, Pressable, TouchableOpacity, Text, View, ScrollView } from 'react-native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import axios from 'axios';
 import { url } from '~/utils/contants';
 import { colors, fonts } from '~/utils/generalStyles';
@@ -7,29 +7,51 @@ import { Avatar } from '@rneui/base';
 import Modal from 'react-native-modal';
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ModalComment } from '../client/Home';
 import { images } from '~/assets';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 const Home = () => {
   const [data, setData] = React.useState([]);
   const [visibleComment, setVisibleComment] = React.useState(false);
   const [postId, setPostId] = React.useState('');
-
+  const navigation = useNavigation<any>();
   const getPosts = async () => {
     return await axios.get(`${url}posts`);
   };
-  React.useEffect(() => {
-    getPosts()
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-    console.log(data);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getPosts()
+        .then((res) => setData(res.data))
+        .catch((err) => console.log(err));
+    }, [])
+  );
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>choose your next task</Text>
+      <View
+        style={{
+          width: '100%',
+          paddingHorizontal: 20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{ fontSize: fonts.xs, fontWeight: '500' }}>choose your next task</Text>
+        <Text
+          style={{ backgroundColor: colors.brand, color: 'white', padding: 10, borderRadius: 5 }}
+        >
+          Add Post
+        </Text>
+      </View>
       <ScrollView style={{ flex: 0.9 }} contentContainerStyle={{ paddingBottom: 80 }}>
         {data ? (
           data.map((item: any, idx: number) => (
-            <TouchableOpacity style={styles.card} key={item._id}>
+            <TouchableOpacity
+              style={styles.card}
+              key={item._id}
+              onPress={() => navigation.navigate('Details', { item: item })}
+            >
               <View style={styles.userInfo}>
                 <Avatar
                   rounded
@@ -54,6 +76,7 @@ const Home = () => {
                   setVisibleComment(true), setPostId(item._id);
                 }}
               >
+                <AntDesign style={{ marginRight: 10 }} name="heart" color={'red'} size={24} />
                 <Fontisto name="comments" size={22} />
               </Pressable>
               <Modal
@@ -105,5 +128,7 @@ const styles = StyleSheet.create({
   commentPress: {
     marginTop: 20,
     alignSelf: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
