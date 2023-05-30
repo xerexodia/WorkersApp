@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { useAuthContext } from '~/context/AuthContext';
 import axios from 'axios';
 import { url } from '~/utils/contants';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors, fonts } from '~/utils/generalStyles';
 import { Avatar } from '@rneui/base';
@@ -12,6 +12,7 @@ import { images } from '~/assets';
 const ReservedTasks = () => {
   const { user } = useAuthContext();
   const [data, setData] = useState([]);
+  const navigation = useNavigation<any>();
   const getData = async () => {
     return await axios.get(`${url}posts/reserved/post/${user._id}`);
   };
@@ -26,7 +27,11 @@ const ReservedTasks = () => {
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 60, paddingTop: 10 }}>
       {data ? (
         data.map((item: any, idx: number) => (
-          <TouchableOpacity style={styles.card} key={item._id}>
+          <TouchableOpacity
+            style={styles.card}
+            key={item._id}
+            onPress={() => navigation.navigate('Details', { item: item })}
+          >
             <View style={styles.userInfo}>
               <Avatar
                 rounded

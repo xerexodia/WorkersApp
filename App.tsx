@@ -27,7 +27,9 @@ import { Formik } from 'formik';
 import ImagePickerComponent from '~/components/PickImageComponent';
 import { TextInput } from 'react-native-gesture-handler';
 import AuthContext, { useAuthContext } from '~/context/AuthContext';
-import MyDrawer from '~/routes/drawer';
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs(); //Hide all warning notifications on front-end
+
 function App(): JSX.Element {
   const { user } = useAuthContext();
   console.log(user);

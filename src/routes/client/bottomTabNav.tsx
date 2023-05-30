@@ -8,9 +8,29 @@ import Home from '~/screens/client/Home';
 import WorkersList from '~/screens/client/WorkersList';
 import Profile from '~/screens/client/Profile';
 import ProfileNav from './profile';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SeachWorker from '~/screens/client/SeachWorker';
+import WorkerProfile from '~/screens/client/WorkerProfile';
 // import TopTab from './topTabNav';
 
 const Tab = createBottomTabNavigator();
+
+const Rap = createNativeStackNavigator();
+
+const WOrkerNav = () => {
+  return (
+    <Rap.Navigator
+      initialRouteName="List"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Rap.Screen name="List" component={WorkersList} />
+      <Rap.Screen name="Search" component={SeachWorker} />
+      <Rap.Screen name="WorkerProfile" component={WorkerProfile} />
+    </Rap.Navigator>
+  );
+};
 
 export default function ClientBootomTabNav() {
   return (
@@ -56,7 +76,7 @@ export default function ClientBootomTabNav() {
       />
       <Tab.Screen
         name="WorkersList"
-        component={WorkersList}
+        component={WOrkerNav}
         options={{
           tabBarIcon: ({ focused }) => (
             <MaterialIcons

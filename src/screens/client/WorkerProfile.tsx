@@ -7,21 +7,26 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const WorkerProfile = () => {
+const WorkerProfile = (props: any) => {
+  const item = props.route.params.item;
+  console.log(item);
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle={'dark-content'} />
       {/* -----------------------personal Info----------------------- */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.name}>Mme. Islem abdellaoui</Text>
-          <Text style={styles.profession}>baby sitter</Text>
+          <Text style={styles.name}>
+            Mme.{item.nom} {item.prenom}
+          </Text>
+          <Text style={styles.profession}>{item.profession}</Text>
         </View>
         <Avatar
           size={60}
           rounded
           title="IA"
           containerStyle={{ backgroundColor: '#6c5dd3', marginRight: 20 }}
+          source={{ uri: item?.photo?.replace('127.0.0.1', '10.0.0.2') }}
         />
         {/* ------------------------review section--------------------- */}
       </View>
@@ -46,7 +51,7 @@ const WorkerProfile = () => {
       <View style={styles.cardsContainer}>
         <View style={styles.card}>
           <FontAwesome5 name="microscope" size={40} color="#6c5dd3" />
-          <Text style={styles.expText}>6 Years</Text>
+          <Text style={styles.expText}>{item.experience}</Text>
           <Text>experience</Text>
         </View>
         <View style={styles.card}>
@@ -56,19 +61,9 @@ const WorkerProfile = () => {
         </View>
       </View>
       {/* ----------------------- personal Description---------------------- */}
-      <Text style={styles.about}>About Islem</Text>
+      <Text style={styles.about}>About {item.nom}</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.description}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas
-          vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum
-          quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident
-          similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias
-          architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt
-          quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-          quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis
-          modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias error harum maxime
-          adipisci amet laborum.
-        </Text>
+        <Text style={styles.description}>{item.description}</Text>
       </ScrollView>
     </View>
   );

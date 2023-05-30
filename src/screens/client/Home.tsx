@@ -233,33 +233,31 @@ export const ModalComment = ({ itemId }: any) => {
           </View>
         ) : (
           comments?.map((cmt: any, idx: any) => (
-            <>
-              <View
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignSelf: 'flex-start',
+                marginBottom: 17,
+              }}
+              key={cmt.comment?._id}
+            >
+              <Text style={{ marginLeft: 10, marginBottom: 3 }}>{cmt?.user?.nom}</Text>
+              <Text
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignSelf: 'flex-start',
-                  marginBottom: 17,
+                  backgroundColor: colors.lightGrey,
+                  marginRight: 40,
+                  color: colors.dark,
+                  fontWeight: '500',
+                  letterSpacing: 0.3,
+                  paddingVertical: 5,
+                  paddingHorizontal: 15,
+                  borderRadius: 12,
                 }}
-                key={cmt.comment?._id}
               >
-                <Text style={{ marginLeft: 10, marginBottom: 3 }}>{cmt?.user?.nom}</Text>
-                <Text
-                  style={{
-                    backgroundColor: colors.lightGrey,
-                    marginRight: 40,
-                    color: colors.dark,
-                    fontWeight: '500',
-                    letterSpacing: 0.3,
-                    paddingVertical: 5,
-                    paddingHorizontal: 15,
-                    borderRadius: 12,
-                  }}
-                >
-                  {cmt.comment?.content}
-                </Text>
-              </View>
-            </>
+                {cmt.comment?.content}
+              </Text>
+            </View>
           ))
         )}
       </ScrollView>

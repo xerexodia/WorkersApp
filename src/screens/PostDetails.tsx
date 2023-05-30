@@ -11,6 +11,7 @@ import { useAuthContext } from '~/context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 const PostDetails = (props: any) => {
   const item = props.route.params.item;
+  console.log(item);
   const { user } = useAuthContext();
   const navigation = useNavigation<any>();
   return (
@@ -21,15 +22,15 @@ const PostDetails = (props: any) => {
           <Avatar
             size={64}
             rounded
-            title={item.clientId.nom[0]}
+            title={item.clientId?.nom ? item.clientId.nom[0] : item.workerId.nom[0]}
             titleStyle={{ color: colors.grey }}
             containerStyle={styles.avatar}
           />
         </View>
-        <Text style={styles.name}>{item.clientId.nom}</Text>
+        <Text style={styles.name}>{item.clientId ? item.clientId.nom : item.workerId.nom}</Text>
         <View style={styles.body}>
           <View>
-            {item.photo && (
+            {(item.postId?.photo || item.photo) && (
               <Image
                 style={{
                   width: '80%',
@@ -38,17 +39,26 @@ const PostDetails = (props: any) => {
                   marginBottom: 20,
                   borderRadius: 10,
                 }}
-                source={{ uri: item.photo.replace('127.0.0.1', '10.0.2.2') }}
+                source={{
+                  uri: item.photo
+                    ? item.photo?.replace('127.0.0.1', '10.0.2.2')
+                    : item.postId?.photo?.replace('127.0.0.1', '10.0.2.2'),
+                }}
               />
             )}
           </View>
           <View>
             <Text>
-              Adresse: <Text style={{ marginLeft: 10, fontWeight: '500' }}>{item.adresse}</Text>{' '}
+              Adresse:
+              <Text style={{ marginLeft: 10, fontWeight: '500' }}>
+                {item.adresse ? item.adresse : item.postId.adresse}
+              </Text>
             </Text>
             <Text>
               Description:
-              <Text style={{ marginLeft: 10, fontWeight: '500' }}>{item.description}</Text>{' '}
+              <Text style={{ marginLeft: 10, fontWeight: '500' }}>
+                {item.description ? item.description : item.postId.description}
+              </Text>
             </Text>
           </View>
           <View
@@ -62,14 +72,25 @@ const PostDetails = (props: any) => {
               alignSelf: 'center',
             }}
           >
-            <Button
-              title="réserver"
-              onPress={async () => {
-                await axios
-                  .patch(`${url}posts?postId=${item._id}&workerId=${user._id}`)
-                  .then((res) => navigation.navigate('Tasks', { screen: 'Reserved' }));
-              }}
-            />
+            {item.postId?.status === 'reserved' || item.status === 'reserved' ? (
+              <Button
+                title="completed"
+                onPress={async () => {
+                  await axios
+                    .patch(`${url}posts/completed/${item.postId._id}`)
+                    .then((res) => navigation.navigate('Tasks', { screen: 'Finished' }));
+                }}
+              />
+            ) : item.postId?.status === 'pending' || item.status === 'pending' ? (
+              <Button
+                title="réserver"
+                onPress={async () => {
+                  await axios
+                    .patch(`${url}posts?postId=${item._id}&workerId=${user._id}`)
+                    .then((res) => navigation.navigate('Tasks', { screen: 'Reserved' }));
+                }}
+              />
+            ) : null}
           </View>
         </View>
       </View>

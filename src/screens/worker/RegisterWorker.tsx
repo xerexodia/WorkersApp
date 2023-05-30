@@ -202,7 +202,7 @@ const SignUpWorker = () => {
                 <View style={styles.spacing} />
                 <SelectComponent
                   label="Profession:"
-                  options={['plumber', 'babySitter', 'qsqdqsd', 'qsdqsde']}
+                  options={['plumber', 'babySitter', 'transporter', 'carpenter', 'handyman']}
                   selectedValue={values.profession}
                   onSelect={(value) => handleChange('profession')(value)}
                 />

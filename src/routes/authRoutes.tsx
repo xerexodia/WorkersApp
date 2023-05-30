@@ -6,6 +6,7 @@ import SignUpClient from '~/screens/client/register';
 import SignUpWorker from '~/screens/worker/RegisterWorker';
 import MyTabs from './worker/bottomTabNav';
 import ClientBootomTabNav from './client/bottomTabNav';
+import MainNav from './worker/PostStack';
 
 const Tab = createNativeStackNavigator();
 const AuthRoutes = () => {
@@ -14,7 +15,7 @@ const AuthRoutes = () => {
     if (user.role === 'worker') {
       return (
         <>
-          <MyTabs />
+          <MainNav />
         </>
       );
     }

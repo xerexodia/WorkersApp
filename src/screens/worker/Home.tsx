@@ -11,7 +11,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ModalComment } from '../client/Home';
 import { images } from '~/assets';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useAuthContext } from '~/context/AuthContext';
 const Home = () => {
+  const { user } = useAuthContext();
+  console.log(user);
   const [data, setData] = React.useState([]);
   const [visibleComment, setVisibleComment] = React.useState(false);
   const [postId, setPostId] = React.useState('');
@@ -33,16 +36,12 @@ const Home = () => {
           width: '100%',
           paddingHorizontal: 20,
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
+          flex: 0.1,
         }}
       >
         <Text style={{ fontSize: fonts.xs, fontWeight: '500' }}>choose your next task</Text>
-        <Text
-          style={{ backgroundColor: colors.brand, color: 'white', padding: 10, borderRadius: 5 }}
-        >
-          Add Post
-        </Text>
       </View>
       <ScrollView style={{ flex: 0.9 }} contentContainerStyle={{ paddingBottom: 80 }}>
         {data ? (
@@ -76,7 +75,7 @@ const Home = () => {
                   setVisibleComment(true), setPostId(item._id);
                 }}
               >
-                <AntDesign style={{ marginRight: 10 }} name="heart" color={'red'} size={24} />
+                <AntDesign style={{ marginRight: 10 }} name="heart" color={'grey'} size={24} />
                 <Fontisto name="comments" size={22} />
               </Pressable>
               <Modal

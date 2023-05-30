@@ -5,10 +5,11 @@ import ReservedTasks from '~/screens/worker/ReservedTasks';
 import { Text } from 'react-native';
 import { colors, fonts } from '~/utils/generalStyles';
 import { Animated, View, TouchableOpacity } from 'react-native';
+import MaterialPosts from '~/screens/worker/MaterialPosts';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function TopTab() {
+export function TopTab() {
   return (
     <Tab.Navigator initialRouteName="Reserved">
       <Tab.Screen
@@ -57,6 +58,77 @@ export default function TopTab() {
                 }}
               >
                 Finished
+              </Text>
+            );
+          },
+          tabBarAllowFontScaling: true,
+          tabBarIndicatorStyle: {
+            width: '30%',
+            backgroundColor: colors.grey,
+            height: 3,
+            position: 'absolute',
+            left: '10%',
+            borderRadius: 10,
+          },
+          // tabBarActiveTintColor: 'white',
+          // tabBarInactiveTintColor
+          tabBarPressColor: 'white',
+          tabBarPressOpacity: 0,
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+export function TopTabPosts() {
+  return (
+    <Tab.Navigator initialRouteName="Post">
+      <Tab.Screen
+        name="POst"
+        component={Home}
+        options={{
+          tabBarLabel(props) {
+            return (
+              <Text
+                style={{
+                  color: props.focused ? colors.brand : colors.grey,
+                  marginHorizontal: 15,
+                  fontSize: 18,
+                }}
+              >
+                For You
+              </Text>
+            );
+          },
+          tabBarAllowFontScaling: true,
+          tabBarIndicatorStyle: {
+            width: '30%',
+            backgroundColor: colors.grey,
+            height: 3,
+            position: 'absolute',
+            left: '10%',
+            borderRadius: 10,
+          },
+          // tabBarActiveTintColor: 'white',
+          // tabBarInactiveTintColor
+          tabBarPressColor: 'white',
+          tabBarPressOpacity: 0,
+        }}
+      />
+      <Tab.Screen
+        name="Material"
+        component={MaterialPosts}
+        options={{
+          tabBarLabel(props) {
+            return (
+              <Text
+                style={{
+                  color: props.focused ? colors.brand : colors.grey,
+                  marginHorizontal: 15,
+                  fontSize: 18,
+                }}
+              >
+                Material Post
               </Text>
             );
           },

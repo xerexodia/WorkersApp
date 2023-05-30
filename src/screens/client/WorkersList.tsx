@@ -1,19 +1,38 @@
 import { ScrollView, TouchableOpacity, StatusBar, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { colors, fonts } from '~/utils/generalStyles';
 import WorkerSuggestionCard from '~/components/WorkerSuggestionCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchCard from '~/components/SearchCard';
 import { Avatar } from '@rneui/base';
 import Avis from '~/components/Avis';
+import axios from 'axios';
+import { url } from '~/utils/contants';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const WorkersList = () => {
+  const [data, setData] = useState([]);
+  const navigation = useNavigation<any>();
+  const getData = () => {
+    return axios.get(`${url}admin/workers`);
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getData().then((res) => setData(res.data));
+    }, [])
+  );
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={colors.primary} barStyle="dark-content" />
       <View style={styles.header}>
         <Text style={styles.suggest}>Suggestion</Text>
-        <Ionicons style={styles.icon} name="search" color={colors.brand} size={28} />
+        <Ionicons
+          onPress={() => navigation.navigate('Search', { item: data })}
+          style={styles.icon}
+          name="search"
+          color={colors.brand}
+          size={28}
+        />
       </View>
       <ScrollView
         horizontal
@@ -39,26 +58,72 @@ const WorkersList = () => {
             qskgdqlsdlqksldkqlskdhlqhsdlqsdqs dnlqnksdqsdlqshdlkqhsdhqlksd
           </Text>
         </View>
+        <View style={styles.containerList}>
+          <View style={styles.headerList}>
+            <Avatar
+              title="AA"
+              containerStyle={{ backgroundColor: colors.brand }}
+              rounded
+              size={40}
+            />
+            <View style={styles.info}>
+              <Text style={styles.name}>Ahlem Abdellaoui</Text>
+              <Avis avis={4.3} />
+            </View>
+          </View>
+          <Text style={styles.profession}>I am baby sitter</Text>
+          <Text style={styles.desc}>
+            qskgdqlsdlqksldkqlskdhlqhsdlqsdqs dnlqnksdqsdlqshdlkqhsdhqlksd
+          </Text>
+        </View>
+        <View style={styles.containerList}>
+          <View style={styles.headerList}>
+            <Avatar
+              title="IA"
+              containerStyle={{ backgroundColor: colors.brand }}
+              rounded
+              size={40}
+            />
+            <View style={styles.info}>
+              <Text style={styles.name}>Islem Abdellaoui</Text>
+              <Avis avis={4.3} />
+            </View>
+          </View>
+          <Text style={styles.profession}>I am carpenter</Text>
+          <Text style={styles.desc}>
+            qskgdqlsdlqksldkqlskdhlqhsdlqsdqs dnlqnksdqsdlqshdlkqhsdhqlksd
+          </Text>
+        </View>
         {/* ------------------------------ */}
       </ScrollView>
 
       <ScrollView style={{ height: 680 }} showsVerticalScrollIndicator={false}>
         {/* --------------------------- */}
-        <TouchableOpacity style={styles.suggestionCard}>
-          <View style={styles.infoCard}>
-            <Avatar
-              title="AI"
-              containerStyle={{ backgroundColor: colors.brand }}
-              rounded
-              size={40}
-            />
-            <View style={styles.textContainer}>
-              <Text>Islem Abdellaoui</Text>
-              <Avis avis={3} />
+        {data?.map((item: any, idx: number) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('WorkerProfile', { item: item })}
+            key={idx}
+            style={styles.suggestionCard}
+          >
+            <View style={styles.infoCard}>
+              <Avatar
+                title={`${item.nom[0].toUpperCase() + item.prenom[0].toUpperCase()}`}
+                containerStyle={{ backgroundColor: colors.brand }}
+                rounded
+                size={40}
+                source={{ uri: item?.photo?.replace('127.0.0.1', '10.0.0.2') }}
+              />
+              <View style={styles.textContainer}>
+                <Text>
+                  {item.nom} {item.prenom}
+                </Text>
+                <Avis avis={3} />
+              </View>
             </View>
-          </View>
-          <Text style={{ fontWeight: '600' }}>Plumber</Text>
-        </TouchableOpacity>
+            <Text style={{ fontWeight: '600' }}>{item.profession}</Text>
+          </TouchableOpacity>
+        ))}
+
         {/* --------------------------- */}
       </ScrollView>
     </View>
